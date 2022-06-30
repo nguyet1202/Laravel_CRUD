@@ -97,5 +97,10 @@ class PageController extends Controller
         $product =product::find($id);
         $product->delete();
         return redirect('/showadmin');
-}
+    }
+    public function getDetail(Request $request){
+        $sanpham = Product::where('id',$request->id)->first();
+        $splienquan = Product::where('id','<>',$sanpham->id,'and','id_type','=',$sanpham->id_type)->paginate(3);
+        return view('page.Detail',compact('sanpham','splienquan'));
+    }
 }
